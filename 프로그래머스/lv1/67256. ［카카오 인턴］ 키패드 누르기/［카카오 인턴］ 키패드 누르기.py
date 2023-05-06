@@ -8,7 +8,6 @@ def solution(numbers, hand):
     }
     L_location = keypad_dic[10] # 왼손 첫  위치 ("*")
     R_location = keypad_dic[12] # 오른손 첫  위치 ("#")
-
     for x in numbers: # 번호 루프
         if x in [1, 4, 7]: # 번호가 1, 4, 7이면
             answer += 'L' # L 추가
@@ -20,20 +19,19 @@ def solution(numbers, hand):
             L_distance = 0 # 번호와 왼손의 거리
             R_distance = 0 # 번호와 오른손의 거리
             for i, j, k in zip(L_location, R_location, keypad_dic[x]): # 왼손, 오른손, 번호
-                L_distance += abs(i - k) #
-                R_distance += abs(j - k)
-            
-            if L_distance > R_distance:
-                answer += 'R'
-                R_location = keypad_dic[x]
-            elif L_distance < R_distance:
-                answer += 'L'
-                L_location = keypad_dic[x]
-            else:
-                if hand == 'right':
-                    answer += 'R'
-                    R_location = keypad_dic[x]
-                else:
-                    answer += 'L'
-                    L_location = keypad_dic[x]
+                L_distance += abs(i - k) # 번호와 왼손의 x, y거리 계산(제곱근과 루트는 제외)
+                R_distance += abs(j - k) # 번호와 오른손의 x, y거리 계산(제곱근과 루트는 제외)
+            if L_distance > R_distance: # 왼손 거리가 더 멀면
+                answer += 'R' # R 추가
+                R_location = keypad_dic[x] # 오른손 위치를 번호로 바꿈
+            elif L_distance < R_distance: # 오른손 거리가 더 멀면
+                answer += 'L' # L 추가
+                L_location = keypad_dic[x] # 왼손 위치를 번호로 바꿈
+            else: # 거리가 같은 경우
+                if hand == 'right': # 오른손 잡이면
+                    answer += 'R' # R 추가
+                    R_location = keypad_dic[x] # 오른손 위치를 번호로 바꿈
+                else: # 왼손 잡이면
+                    answer += 'L' # L 추가
+                    L_location = keypad_dic[x] # 왼손 위치를 번호로 바꿈
     return answer
