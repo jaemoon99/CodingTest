@@ -18,10 +18,10 @@ def solution(survey, choices):
             mbti_dic[survey[x][1]] += choices[x] - 4
         elif choices[x] == 1:
             mbti_dic[survey[x][0]] += 3
-        elif choices[x] == 3:
-            mbti_dic[survey[x][0]] += 1
         elif choices[x] == 2:
             mbti_dic[survey[x][0]] += 2
+        elif choices[x] == 3:
+            mbti_dic[survey[x][0]] += 1
 
     for y in mbti_set:
         if mbti_dic[y[0]] == mbti_dic[y[1]]:
@@ -30,5 +30,9 @@ def solution(survey, choices):
             answer += y[0]
         elif mbti_dic[y[0]] < mbti_dic[y[1]]:
             answer += y[1]
+            
+            
+            
+            
 
     return answer
