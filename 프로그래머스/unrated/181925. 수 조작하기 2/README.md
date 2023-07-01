@@ -1,10 +1,10 @@
 # [unrated] 수 조작하기 2 - 181925 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181925) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181925?language=python3) 
 
 ### 성능 요약
 
-메모리: 13.5 MB, 시간: 27.68 ms
+메모리: 13.5 MB, 시간: 9.13 ms
 
 ### 구분
 
