@@ -3,7 +3,7 @@ def solution(d, budget):
     for x in sorted(d):
         budget -= x
         if 0 > budget:
-            return answer
+            break
         elif 0 == budget:
             return answer + 1
         answer += 1
