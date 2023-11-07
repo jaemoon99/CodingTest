@@ -1,5 +1,4 @@
 def solution(polynomial):
-    answer = ''
     terms = polynomial.split(" + ")
     x_term, int_term = [], []
     for term in terms:
