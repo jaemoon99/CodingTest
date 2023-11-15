@@ -9,6 +9,7 @@ for test_case in range(1, T + 1):
     count = 0
 
     while orders:
+        
         if wait:
             for x in range(len(area)):
                 if area[x] == 0:
@@ -18,6 +19,7 @@ for test_case in range(1, T + 1):
 
         if order > 0:
             check = 0
+            
             for x in range(len(area)):
                 if area[x] == 0:
                     area[x] = order
