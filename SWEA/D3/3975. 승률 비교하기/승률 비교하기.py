@@ -1,16 +1,14 @@
-lst = []
+result = []
 T = int(input())
-for tc in range(T):
-    lst.append(tuple(map(int, input().split())))
+for _ in range(T):
+    result.append(tuple(map(int, input().split())))
 
-for tc in range(T):
-    A, B, C, D = lst[tc]
-    ALICE = A / B
-    BOB = C / D
+for test_case in range(1, T + 1):
+    A, B, C, D = result[test_case - 1]
 
-    if ALICE > BOB:
-        print(f'#{tc + 1} ALICE')
-    elif ALICE < BOB:
-        print(f'#{tc + 1} BOB')
+    if A/B > C/D:
+        print(f'#{test_case} ALICE')
+    elif A/B < C/D:
+        print(f'#{test_case} BOB')
     else:
-        print(f'#{tc + 1} DRAW')
+        print(f'#{test_case} DRAW')
