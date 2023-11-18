@@ -1,5 +1,4 @@
 def solution(lines):
-    answer = 0
     dot_dic = dict()
     for i, j in lines:
         for k in range(i, j):
