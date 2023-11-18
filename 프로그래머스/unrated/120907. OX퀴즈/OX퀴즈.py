@@ -22,4 +22,5 @@ def solution(quiz):
     
     for x in quiz:
         answer.append(check(x))
+        
     return answer
