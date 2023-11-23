@@ -11,5 +11,4 @@ def solution(k, score):
         else:
             answer.append(sub[0])
         
-        
     return answer
