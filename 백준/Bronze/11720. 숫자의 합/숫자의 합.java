@@ -6,7 +6,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         int n = scanner.nextInt();
-        String nums = scanner.next();
+        scanner.nextLine();
+        String nums = scanner.nextLine();
 
         int total = 0;
         for (int i = 0; i < n; i++) {
