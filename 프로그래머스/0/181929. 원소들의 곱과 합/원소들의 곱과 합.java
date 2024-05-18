@@ -8,7 +8,7 @@ class Solution {
             mul *= num;
         }
         
-        if (Math.pow(sum, 2) > mul) {
+        if (sum * sum > mul) {
             return 1;
         }
         
