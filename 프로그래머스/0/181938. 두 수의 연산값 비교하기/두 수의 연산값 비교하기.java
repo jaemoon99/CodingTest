@@ -4,5 +4,6 @@ class Solution {
         int mul = 2 * a * b;
         
         return Math.max(sum, mul);
+        // return sum > mul ? sum : mul;
     }
 }
