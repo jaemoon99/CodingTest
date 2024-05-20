@@ -3,13 +3,14 @@ import java.util.ArrayList;
 
 class Solution {
     public String[] solution(String[] strArr) {
-        List<String> answer = new ArrayList<>();
+        String[] answer = {};
+        List<String> middleArray = new ArrayList<>();
         
         for (String str : strArr) {
             if (!str.contains("ad")) {
-                answer.add(str);
+                middleArray.add(str);
             }
         }
-        return answer.toArray(new String[0]);
+        return middleArray.toArray(answer);
     }
 }
