@@ -4,9 +4,9 @@ class Solution {
         
         for (int num : num_list) {
             if (num == n) {
-                return 1;
+                answer = 1;
             }
         }
-        return 0;
+        return answer;
     }
 }
