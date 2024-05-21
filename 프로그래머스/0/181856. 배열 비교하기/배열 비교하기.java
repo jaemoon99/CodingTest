@@ -7,15 +7,11 @@ class Solution {
         } else if (arr1.length < arr2.length) {
             answer = -1;
         } else {
-            int arr1Result = 0;
-            int arr2Result = 0;
+            int arr1Result = 0, arr2Result = 0;
             
-            for (int num : arr1) {
-                arr1Result += num;
-            }
-            
-            for (int num : arr2) {
-                arr2Result += num;
+            for (int i = 0; i < arr1.length; i++) {
+                arr1Result += arr1[i];
+                arr2Result += arr2[i];
             }
 
             if (arr1Result > arr2Result) {
