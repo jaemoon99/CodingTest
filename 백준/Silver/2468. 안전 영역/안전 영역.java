@@ -28,7 +28,7 @@ public class Main {
         n = sc.nextInt();
         // 건물 높이 초기화
         map = new int[n][n];
-        
+
         // 최대 건물 높이
         int max = 0;
         // 건물 높이 입력
@@ -40,7 +40,7 @@ public class Main {
                 }
             }
         }
-        
+
         // 0 ~ 최대 강우량까지 순회
         for (int i = 0; i <= max; i++) {
             // 영역 개수 초기화
@@ -62,7 +62,7 @@ public class Main {
                     }
                 }
             }
-            
+
             // 배열 전체 순회
             for (int j = 0; j < n; j++) {
                 for (int k = 0; k < n; k++) {
@@ -73,7 +73,7 @@ public class Main {
                     }
                 }
             }
-            
+
             // 잠기지 않은 영역 비교
             if (cnt > result) {
                 result = cnt;
