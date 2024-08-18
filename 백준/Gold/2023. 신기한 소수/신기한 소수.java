@@ -1,39 +1,34 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
-	
-	// 소수 판별 함수
-	public static boolean isPrime(int n) {
-		if (n < 2) return false;
-		for (int i = 2; i * i <= n; i++) {
-			if (n % i == 0) return false;
-		}
-		return true;
-	}
-	
-	// 재귀적으로 소수를 찾는 함수
-	public static void findPrime(int num, int n) {
-		if (n == 0) {
-			System.out.println(num);
-			return;
-		}
-		
-		for (int i = 1; i <= 9; i++) {
-			int newNum = num * 10 + i;
-			if (isPrime(newNum)) {
-				findPrime(newNum, n - 1);
-			}
-		}
-	}
-	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt();
-		
-		// 첫 자리 수를 2, 3, 5, 7로 시작하도록 함
-		findPrime(2, N - 1);
-		findPrime(3, N - 1);
-		findPrime(5, N - 1);
-		findPrime(7, N - 1);
-	}
+    public static StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        getResult(0,n);
+        System.out.println(sb);
+    }
+
+    public static void getResult(int output, int n) {
+        if (n == 0) {
+            if (isPrime(output)) sb.append(output).append("\n");
+            return;
+        }
+        for (int i=0; i<10; i++) {
+            int next = output*10+i;
+            if (isPrime(next)) getResult(next, n-1);
+        }
+    }
+
+    public static boolean isPrime(int num) {
+        if (num < 2) return false;
+
+        for (int i=2; i<=Math.sqrt(num); i++) {
+            if (num % i == 0) return false;
+        }
+        return true;
+    }
+
 }
