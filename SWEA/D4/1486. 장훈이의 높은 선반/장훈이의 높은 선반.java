@@ -39,8 +39,10 @@ public class Solution {
 	
 	static void func(int cnt, int sum) {
 		// 현재까지의 합이 B 이상이면서 result보다 작으면 최소값 갱신
-        if (sum >= B && result > sum) {
-        	result = sum;
+        if (sum >= B) {
+        	if (result > sum) {        		
+        		result = sum;
+        	}
             return;
         }
 
