@@ -40,6 +40,10 @@ public class Solution {
 	}
 	
 	static void func(int cnt, int sum) {
+		// 현재 요금이 최소값보다 큰 경우 종료
+		if (sum > result) {
+			return;
+		}
 		
 		// 12월까지 순회한 경우 최소값 갱신 후 종료
 		if(cnt >= 12) {
