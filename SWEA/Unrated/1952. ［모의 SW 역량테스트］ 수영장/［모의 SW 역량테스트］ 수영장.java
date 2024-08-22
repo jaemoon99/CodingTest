@@ -31,11 +31,11 @@ public class Solution {
 			}
 			
 			// 초기 결과값 설정
-			result = 999_999_999;
+			result = pay[3];
 			// 함수 호출
 			func(0, 0);
 			// 1년 요금과 비교 후 최소값 출력
-			System.out.println("#" + tc + " " + Math.min(result, pay[3]));
+			System.out.println("#" + tc + " " + result);
 		}
 	}
 	
