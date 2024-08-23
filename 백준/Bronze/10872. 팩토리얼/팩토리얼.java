@@ -3,15 +3,17 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        int n = scanner.nextInt();
-        int result = 1;
-        
-        for (int i = 1; i <= n; i++) {
-            result *= i;
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        System.out.println(factorial(n));
+    }
+
+    static int factorial(int num) {
+        if (num <= 1) {
+            return 1;
+        } else {
+            return num * factorial(num - 1);
         }
-        System.out.println(result);
-        scanner.close();
     }
 }
