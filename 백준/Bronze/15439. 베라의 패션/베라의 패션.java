@@ -1,15 +1,31 @@
-import java.math.BigInteger;
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
-
+    static int n;
+    static int result;
+    static boolean[] v;
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        BigInteger n = scanner.nextBigInteger();
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
 
-        System.out.println(n.multiply(n.subtract(BigInteger.valueOf(1))));
+        v = new boolean[n];
 
-        scanner.close();
+        result = 0;
+        combination(0, 0);
+        System.out.println(result * 2);
+    }
+
+    static void combination(int cnt, int start) {
+        if (cnt == 2) {
+            result++;
+            return;
+        }
+
+        for (int i = start; i < n; i++) {
+            v[i] = true;
+            combination(cnt + 1, i + 1);
+            v[i] = false;
+        }
     }
 }
