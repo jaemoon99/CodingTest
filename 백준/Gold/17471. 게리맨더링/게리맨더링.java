@@ -3,7 +3,7 @@ import java.util.*;
 public class Main {
     static int N; // 구역의 수
     static int[] population; // 각 구역의 인구 수
-    static ArrayList<ArrayList<Integer>> adj; // 인접 리스트로 표현된 그래프
+    static List<Integer>[] adj; // 인접 리스트로 표현된 그래프
     static boolean[] visited; // 방문 체크 배열
     static int minDiff = Integer.MAX_VALUE; // 인구 차이의 최소값
 
@@ -11,18 +11,19 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         N = sc.nextInt();
         population = new int[N + 1];
-        adj = new ArrayList<>();
+        adj = new List[N + 1];
         
         for (int i = 1; i <= N; i++) {
             population[i] = sc.nextInt();
-            adj.add(new ArrayList<>());
+            adj[i] = new ArrayList<>();
         }
         
         for (int i = 1; i <= N; i++) {
             int num = sc.nextInt();
             for (int j = 0; j < num; j++) {
                 int neighbor = sc.nextInt();
-                adj.get(i - 1).add(neighbor);
+                adj[i].add(neighbor);
+                adj[neighbor].add(i);
             }
         }
         
@@ -93,7 +94,7 @@ public class Main {
             sum += population[cur];
             count++;
             
-            for (int next : adj.get(cur - 1)) {
+            for (int next : adj[cur]) {
                 if (!visited[next] && contains(group, next)) {
                     visited[next] = true;
                     queue.add(next);
