@@ -1,77 +1,80 @@
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        /**
-         * n : 정점의 개수
-         * m : 간선의 개수
-         * v : 시작할 정점의 번호
-         */
-        int n = sc.nextInt() + 1;
-        int m = sc.nextInt();
-        int v = sc.nextInt();
-
-        /**
-         * arr : 연결된 노드를 표시한 배열
-         * visited : 방문한 노드를 체크할 배열
-         */
-        int[][] checked = new int[n][n];
-        int[][] visited = new int[n][n];
-
-        // 연결된 노드를 arr 배열에 체크
-        for (int i = 0; i < m; i++) {
-            int start = sc.nextInt();
-            int end = sc.nextInt();
-
-            // 양방향 체크
-            checked[start][end] = 1;
-            checked[end][start] = 1;
-        }
-
-        dfs(checked, visited, v);
-        System.out.println();
-
-        // 방문 초기화
-        visited = new int[n][n];
-        Deque<Integer> queue = new ArrayDeque<>();
-        queue.add(v);
-        bfs(checked, visited, queue);
-    }
-
-    public static void dfs(int[][] checked, int[][] visited, int start) {
-        // 방문한 노드 출력
-        System.out.print(start + " ");
-
+	/**
+	 * n : 정점 개수
+	 * sn : 정점 개수 + 1;
+	 * graph : 그래프 현황
+	 * visited : 방문 배열
+	 * sb : 출력용 스트링빌더
+	 */
+	static int n;
+	static int sn;
+	static int[][] graph;
+	static int[][] visited;
+	static StringBuilder sb = new StringBuilder();
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		
+		n = sc.nextInt();
+		int m = sc.nextInt();
+		int v = sc.nextInt();
+		
+		sn = n + 1;
+		graph = new int[sn][sn];
+		visited = new int[sn][sn];
+		for (int i = 0; i < m; i++) {
+			int x = sc.nextInt();
+			int y = sc.nextInt();
+			// 간선 양방향 표시
+			graph[x][y] = 1;
+			graph[y][x] = 1;
+		}
+		
+		dfs(v);
+		sb.append("\n");
+		visited = new int[sn][sn];
+		bfs(v);
+		System.out.println(sb);
+	}
+	
+	static void dfs(int v) {
+		sb.append(v + " ");
         // 출력한 노드 방문 표시(다른 노드로 부터 도착할 경우)
-        for (int i = 0; i < visited.length; i++) {
-            visited[i][start] = 1;
+        for (int i = 1; i < sn; i++) {
+            visited[i][v] = 1;
         }
 
-        for (int end = 0; end < checked.length; end++) {
+        for (int end = 1; end < sn; end++) {
             // 서로 연결된 노드이면서 방문하지 않은 노드 탐색
-            if (checked[start][end] == 1 && visited[start][end] == 0) {
-                dfs(checked, visited, end);
+            if (graph[v][end] == 1 && visited[v][end] == 0) {
+                dfs(end);
             }
         }
-    }
-
-    public static void bfs(int[][] checked, int[][] visited, Deque<Integer> queue) {
-        while (!queue.isEmpty()) {
-            int start = queue.pop();
+	}
+	
+	static void bfs(int v) {
+		Deque<Integer> queue = new ArrayDeque<>();
+		
+		queue.offer(v);
+		
+		while (!queue.isEmpty()) {
+            int start = queue.poll();
             // 방문한 노드 출력
-            System.out.print(start + " ");
+            sb.append(start + " ");
 
             // 출력한 노드 방문 표시(다른 노드로 부터 도착할 경우)
-            for (int i = 0; i < visited.length; i++) {
+            for (int i = 1; i < sn; i++) {
                 visited[i][start] = 1;
             }
 
-            for (int end = 0; end < checked.length; end++) {
+            for (int end = 1; end < sn; end++) {
                 // 서로 연결된 노드이면서 방문하지 않은 노드 탐색
-                if (checked[start][end] == 1 && visited[start][end] == 0) {
+                if (graph[start][end] == 1 && visited[start][end] == 0) {
                     // 큐에 없는 노드만 추가
                     if (!queue.contains(end)) {
                         queue.add(end);
@@ -79,5 +82,6 @@ public class Main {
                 }
             }
         }
-    }
+		sb.append("\n");
+	}
 }
