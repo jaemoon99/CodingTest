@@ -34,8 +34,8 @@ public class Main {
             for (int i = 0; i < h; i++) {
                 for (int j = 0; j < w; j++) {
                     if (map[i][j] == 1 && visited[i][j] == 0) {
-                        bfs(i, j);  // 사용하고자 하는 메서드를 선택합니다.
-                        // dfs(i, j); // bfs 대신 dfs를 사용하려면 이 줄의 주석을 해제하세요.
+                        //bfs(i, j);  // 사용하고자 하는 메서드를 선택합니다.
+                        dfs(i, j); // bfs 대신 dfs를 사용하려면 이 줄의 주석을 해제하세요.
                         result++;
                     }
                 }
@@ -45,7 +45,8 @@ public class Main {
     }
 
     static void dfs(int x, int y) {
-        visited[x][y] = 1;  // 방문 체크 추가
+    	map[x][y] = 0;
+//        visited[x][y] = 1;  // 방문 체크 추가
 
         for (int i = 0; i < 8; i++) {
             int nx = x + dx[i];
@@ -62,7 +63,8 @@ public class Main {
     static void bfs(int x, int y) {
         Deque<int[]> queue = new ArrayDeque<>();
         queue.offer(new int[]{x, y});
-        visited[x][y] = 1;  // **수정된 부분**: 방문 체크 추가
+        map[x][y] = 0;
+//        visited[x][y] = 1;  // **수정된 부분**: 방문 체크 추가
 
         while (!queue.isEmpty()) {
             int[] poll = queue.poll();
@@ -75,7 +77,8 @@ public class Main {
                     continue;
                 }
 
-                visited[nx][ny] = 1;  // **수정된 부분**: 방문 체크 추가
+                map[nx][ny] = 0;
+//                visited[nx][ny] = 1;  // **수정된 부분**: 방문 체크 추가
                 queue.offer(new int[]{nx, ny});
             }
         }
