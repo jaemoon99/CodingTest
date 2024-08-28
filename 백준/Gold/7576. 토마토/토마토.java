@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -15,7 +14,7 @@ public class Main {
     private static int[] dx = new int[]{-1, 1, 0, 0};
     private static int[] dy = new int[]{0, 0, -1, 1};
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
