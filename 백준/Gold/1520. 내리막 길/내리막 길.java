@@ -2,7 +2,11 @@ import java.util.Scanner;
 
 public class Main {
     /**
-     * 
+     * m : 세로
+     * n : 가로
+     * map : 내리막길
+     * dp : 경로개수
+     * dx, dy : 4방 탐색
      */
     static int m;
     static int n;
@@ -20,15 +24,16 @@ public class Main {
         map = new int[m][n];
         dp = new int[m][n];
 
+        // 맵 입력
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 map[i][j] = sc.nextInt();
-                dp[i][j] = -1; // 아직 계산되지 않음을 의미
+                dp[i][j] = -1; // 아직 경로 계산을 하지 않음을 의미
             }
         }
-
-        int result = dfs(0, 0);
-        System.out.println(result);
+        
+        // 결과 출력
+        System.out.println(dfs(0, 0));
     }
 
     static int dfs(int x, int y) {
