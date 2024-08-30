@@ -52,22 +52,21 @@ public class Solution {
 
             System.out.println("#" + t + " " + result);
         }
-        sc.close();
     }
 
-    private static void dfs(int idx, int cCores, int wLen) {
+    private static void dfs(int cnt, int cCores, int totalLen) {
         // 모든 코어를 처리한 경우
-        if (idx == totalCores) {
+        if (cnt == totalCores) {
             // 더 많은 코어를 연결했거나, 같은 수의 코어를 연결하면서 전선 길이가 짧은 경우 갱신
             if (cCores > maxCores || 
-                (cCores == maxCores && wLen < result)) {
+                (cCores == maxCores && totalLen < result)) {
                 maxCores = cCores;
-                result = wLen;
+                result = totalLen;
             }
             return;
         }
 
-        int[] core = cores.get(idx);
+        int[] core = cores.get(cnt);
         int x = core[0], y = core[1];
 
         // 4방향으로 시도
@@ -79,14 +78,14 @@ public class Solution {
             	// 표시
                 edit(x, y, d, 2);
                 // 다음 코어로 이동
-                dfs(idx + 1, cCores + 1, wLen + len);
+                dfs(cnt + 1, cCores + 1, totalLen + len);
                 // 다시 제거
                 edit(x, y, d, 0);
             }
         }
 
         // 연결하지 않고 다음 코어로 이동
-        dfs(idx + 1, cCores, wLen);
+        dfs(cnt + 1, cCores, totalLen);
     }
 
     private static int canConnect(int x, int y, int d) {
@@ -121,7 +120,9 @@ public class Solution {
             ny += dy[d];
 
             // 경계를 벗어나면 종료
-            if (nx < 0 || nx >= n || ny < 0 || ny >= n) break;
+            if (nx < 0 || nx >= n || ny < 0 || ny >= n) {
+            	break;
+            }
 
             map[nx][ny] = v; // 전선을 놓거나 제거
         }
