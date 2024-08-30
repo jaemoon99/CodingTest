@@ -1,61 +1,68 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Solution {
-    static int N; // 회로판의 크기
-    static int[][] map; // 회로판
-    static List<int[]> cores; // 코어의 좌표 리스트
-    static int minWireLength; // 최소 전선 길이
-    static int maxConnectedCores; // 연결된 최대 코어 수
-    static int totalCores; // 코어의 총 개수
-
-    // 상하좌우 방향 배열
+	
+	/**
+	 * n : 맵크기
+	 * map : 코어 지도
+	 * cores : 코어 좌표 배열
+	 * result : 결과값
+	 * maxCores : 연결된 최대 코어 개수
+	 * totalCores : 총 코어 개수
+	 * dx, dy : 4방 탐색용 배열
+	 */
+    static int n;
+    static int[][] map;
+    static ArrayList<int[]> cores;
+    static int result;
+    static int maxCores;
+    static int totalCores;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int T = sc.nextInt(); // 테스트 케이스 수
+        
+        // 테스트케이스 수
+        int T = sc.nextInt();
 
         for (int t = 1; t <= T; t++) {
-            N = sc.nextInt(); // 회로판 크기
-            map = new int[N][N];
+            n = sc.nextInt();
+            map = new int[n][n];
             cores = new ArrayList<>();
 
-            // 회로판 입력 받기
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
+            // 회로판 입력
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
                     map[i][j] = sc.nextInt();
                     // 가장자리가 아닌 코어만 리스트에 추가
-                    if (map[i][j] == 1 && i != 0 && j != 0 && i != N - 1 && j != N - 1) {
+                    if (map[i][j] == 1 && i != 0 && j != 0 && i != n - 1 && j != n - 1) {
                         cores.add(new int[]{i, j});
                     }
                 }
             }
 
-            totalCores = cores.size(); // 코어의 총 개수
-            minWireLength = Integer.MAX_VALUE; // 초기값: 매우 큰 값
-            maxConnectedCores = 0; // 초기값: 0
+            totalCores = cores.size();
+            // 최소값을 구해야하기 때문에 큰 수로 초기화
+            result = 999_999_999;
+            maxCores = 0;
 
-            // 백트래킹으로 해결
-            backtrack(0, 0, 0);
+            dfs(0, 0, 0);
 
-            System.out.println("#" + t + " " + minWireLength);
+            System.out.println("#" + t + " " + result);
         }
         sc.close();
     }
 
-    // 백트래킹 메서드
-    // idx: 현재 처리 중인 코어의 인덱스
-    // connectedCores: 현재까지 연결된 코어 수
-    // wireLength: 현재까지 사용한 전선의 총 길이
-    private static void backtrack(int idx, int connectedCores, int wireLength) {
+    private static void dfs(int idx, int cCores, int wLen) {
         // 모든 코어를 처리한 경우
         if (idx == totalCores) {
             // 더 많은 코어를 연결했거나, 같은 수의 코어를 연결하면서 전선 길이가 짧은 경우 갱신
-            if (connectedCores > maxConnectedCores || 
-                (connectedCores == maxConnectedCores && wireLength < minWireLength)) {
-                maxConnectedCores = connectedCores;
-                minWireLength = wireLength;
+            if (cCores > maxCores || 
+                (cCores == maxCores && wLen < result)) {
+                maxCores = cCores;
+                result = wLen;
             }
             return;
         }
@@ -65,22 +72,23 @@ public class Solution {
 
         // 4방향으로 시도
         for (int d = 0; d < 4; d++) {
-            int len = canConnect(x, y, d); // 전선을 연결할 수 있는지 확인
-            if (len > 0) { // 연결 가능
-                placeWire(x, y, d, 2); // 전선을 놓음 (표시: 2)
-                backtrack(idx + 1, connectedCores + 1, wireLength + len); // 다음 코어로 이동
-                placeWire(x, y, d, 0); // 전선을 다시 제거
+        	// 전선을 연결할 수 있는지 확인
+            int len = canConnect(x, y, d);
+            // 연결 가능한 경우
+            if (len > 0) {
+            	// 표시
+                edit(x, y, d, 2);
+                // 다음 코어로 이동
+                dfs(idx + 1, cCores + 1, wLen + len);
+                // 다시 제거
+                edit(x, y, d, 0);
             }
         }
 
         // 연결하지 않고 다음 코어로 이동
-        backtrack(idx + 1, connectedCores, wireLength);
+        dfs(idx + 1, cCores, wLen);
     }
 
-    // 전선을 놓을 수 있는지 확인하는 메서드
-    // x, y: 코어의 좌표
-    // d: 방향 (0: 상, 1: 하, 2: 좌, 3: 우)
-    // 전선을 놓을 수 있으면 전선의 길이 반환, 놓을 수 없으면 -1 반환
     private static int canConnect(int x, int y, int d) {
         int nx = x, ny = y;
         int len = 0;
@@ -90,10 +98,14 @@ public class Solution {
             ny += dy[d];
 
             // 경계를 벗어난 경우
-            if (nx < 0 || nx >= N || ny < 0 || ny >= N) break;
+            if (nx < 0 || nx >= n || ny < 0 || ny >= n) {
+            	break;
+            }
 
             // 다른 코어나 전선이 있는 경우
-            if (map[nx][ny] != 0) return -1;
+            if (map[nx][ny] != 0) {
+            	return -1;
+            }
 
             len++;
         }
@@ -101,11 +113,7 @@ public class Solution {
         return len; // 연결 가능한 경우 전선 길이 반환
     }
 
-    // 전선을 놓거나 제거하는 메서드
-    // x, y: 코어의 좌표
-    // d: 방향
-    // val: 놓을 값 (2: 전선 놓기, 0: 전선 제거)
-    private static void placeWire(int x, int y, int d, int val) {
+    private static void edit(int x, int y, int d, int v) {
         int nx = x, ny = y;
 
         while (true) {
@@ -113,9 +121,9 @@ public class Solution {
             ny += dy[d];
 
             // 경계를 벗어나면 종료
-            if (nx < 0 || nx >= N || ny < 0 || ny >= N) break;
+            if (nx < 0 || nx >= n || ny < 0 || ny >= n) break;
 
-            map[nx][ny] = val; // 전선을 놓거나 제거
+            map[nx][ny] = v; // 전선을 놓거나 제거
         }
     }
 }
