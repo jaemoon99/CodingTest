@@ -1,14 +1,8 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Solution {
 
-	static int N;
-	static int startX, startY;
-	static int result;
-	static ArrayList<ArrayList<Integer>> map;
-	static int[] home;
-	static int[] sel;
+	static int n, companyX, companyY, homeX, homeY, result, map[][];
 	static boolean[] v;
 	public static void main(String[] args) {
 		
@@ -16,32 +10,33 @@ public class Solution {
 		
 		int T = sc.nextInt();
 		for (int tc = 1; tc < T + 1; tc++) {
-			N = sc.nextInt();
 			
-			int[] company = new int[] {sc.nextInt(), sc.nextInt()};
-			home = new int[] {sc.nextInt(), sc.nextInt()};
-			map = new ArrayList<>();
-			for (int i = 0; i < N; i++) {
-				map.add(new ArrayList<Integer>());
-				map.get(i).add(sc.nextInt());
-				map.get(i).add(sc.nextInt());
+			n = sc.nextInt();
+			
+			companyX = sc.nextInt();
+			companyY = sc.nextInt();
+
+			homeX = sc.nextInt();
+			homeY = sc.nextInt();
+			
+			map = new int[n][2];
+			for (int i = 0; i < n; i++) {
+				map[i][0] = sc.nextInt();
+				map[i][1] = sc.nextInt();
 			}
 			
-			sel = new int[N];
-			v = new boolean[N];
+			v = new boolean[n];
 			result = 999_999_999;
-			startX = company[0];
-			startY = company[1];
-			func(0, 0);
+
+			permutation(0, 0);
 			System.out.println("#" + tc + " " + result);
 		}
 	}
 	
-	static void func(int cnt, int sum) {
+	static void permutation(int cnt, int sum) {
 		
-		
-		if (cnt == N) {
-			sum = sum + Math.abs(home[0] - startX) + Math.abs(home[1] - startY);
+		if (cnt == n) {
+			sum = sum + cal(homeX, homeY, companyX, companyY);
 			if (result > sum) {
 				result = sum;
 			}
@@ -49,20 +44,29 @@ public class Solution {
 		}
 		
 		
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < n; i++) {
 			if (!v[i]) {
 				v[i] = true;
-				sel[cnt] = i + 1;
-				int tempX = startX;
-				int tempY = startY;
-				int d = Math.abs(map.get(i).get(0) - startX) + Math.abs(map.get(i).get(1) - startY);
-				startX = map.get(i).get(0);
-				startY = map.get(i).get(1);
-				func(cnt + 1, sum + d);				
+				
+				int tempX = companyX;
+				int tempY = companyY;
+				
+				int d = cal(map[i][0], map[i][1], companyX, companyY);
+				
+				companyX = map[i][0];
+				companyY = map[i][1];
+				
+				permutation(cnt + 1, sum + d);				
+				
 				v[i] = false;
-				startX = tempX;
-				startY = tempY;
+				
+				companyX = tempX;
+				companyY = tempY;
 			}
 		}
+	}
+	
+	static int cal(int sx, int sy, int ex, int ey) {
+		return Math.abs(sx - ex) + Math.abs(sy - ey);
 	}
 }
