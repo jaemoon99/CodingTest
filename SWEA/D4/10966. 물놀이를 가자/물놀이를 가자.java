@@ -46,8 +46,10 @@ public class Solution {
                     int ny = y + dy[i];
                     
                     if (nx >= 0 && nx < n && ny >= 0 && ny < m && d[nx][ny] == -1) {
-                        d[nx][ny] = d[x][y] + 1;
-                        q.offer(new int[] {nx, ny});
+                        if (d[nx][ny] == -1 || d[nx][ny] > d[x][y] + 1) {
+                        	d[nx][ny] = d[x][y] + 1;
+                        	q.offer(new int[] {nx, ny});
+                        }
                     }
                 }
             }
