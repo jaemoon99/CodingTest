@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Solution {
 
-	static int h, w, cnt, result, map[][], v[][];
+	static int h, w, result, map[][], v[][];
 	static int[] dx = new int[] {-1, 1, 0, 0};
 	static int[] dy = new int[] {0, 0, -1, 1};
 	public static void main(String[] args) {
@@ -41,10 +41,9 @@ public class Solution {
 	static void bfs(Node node) {
 		Deque<Node> q = new ArrayDeque<>();
 		q.offer(node);
-		cnt = 0;
+
 		while (!q.isEmpty()) {
-			Node poll = q.poll();
-			
+			Node poll = q.poll();			
 			
 			if (map[poll.x][poll.y] == 2) {
 				if (result > v[poll.x][poll.y]) {
