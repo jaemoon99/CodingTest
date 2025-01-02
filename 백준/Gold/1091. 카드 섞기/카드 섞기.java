@@ -22,10 +22,11 @@ public class Main {
         }
 
         cards = new int[N];
+        origins = new int[N];
         for (int i = 0; i < N; i++) {
             cards[i] = i;
+            origins[i] = i;
         }
-        origins = cards.clone();
 
         while (check() == false) {
             if (cnt != 0 && Arrays.equals(cards, origins)) {
