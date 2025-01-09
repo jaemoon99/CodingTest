@@ -6,7 +6,6 @@ public class Main {
         
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        sc.close();
 
         if (n > 1022) {
             System.out.println(-1);
@@ -36,5 +35,6 @@ public class Main {
                 queue.offer(result * 10 + i);
             }
         }
+        sc.close();
     }
 }
