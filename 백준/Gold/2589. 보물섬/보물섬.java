@@ -3,9 +3,10 @@ import java.util.Deque;
 import java.util.Scanner;
 
 public class Main {
-
-	static int h, w, result, v[][];
-	static String map[][];
+	
+	static int h, w, result = 0;
+	static String[][] arr;
+	
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
@@ -13,53 +14,61 @@ public class Main {
 		h = sc.nextInt();
 		w = sc.nextInt();
 		
-		map = new String[h][w];
+		arr = new String[h][w];
 		for (int i = 0; i < h; i++) {
-			String input = sc.next();
+			String line = sc.next();
 			for (int j = 0; j < w; j++) {
-				map[i][j] = input.charAt(j) + "";
+				arr[i][j] = line.charAt(j) + "";
 			}
 		}
 		
-		result = 0;
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
-				if (map[i][j].equals("L")) {
+				if (arr[i][j].equals("L")) {
 					bfs(i, j);
 				}
 			}
 		}
-		System.out.println(result);
+		
+		System.out.println(result - 1);
+		
+		sc.close();
 	}
 	
-	static int[] dx = new int[] {-1, 1, 0, 0};
-	static int[] dy = new int[] {0, 0, -1, 1};
+	static int[] dx = {-1, 1, 0, 0};
+	static int[] dy = {0, 0, -1, 1};
 	
-	static void bfs(int x, int y) {
-		Deque<int[]> q = new ArrayDeque<>();
-		q.offer(new int[] {x, y, 0});
-		v = new int[h][w];
-		v[x][y] = 1;
+	public static void bfs(int x, int y) {
+		Deque<int[]> q = new ArrayDeque<int[]>();
 		
-		int d = 0;
+		int[] start = {x, y};
+		int[][] check = new int[h][w];
+		
+		q.add(start);
+		check[x][y] = 1;
+		
 		while (!q.isEmpty()) {
 			int[] poll = q.poll();
-			x = poll[0];
-			y = poll[1];
-			d = poll[2];
+			
 			for (int i = 0; i < 4; i++) {
-				int nx = x + dx[i];
-				int ny = y + dy[i];
+				int nx = poll[0] + dx[i];
+				int ny = poll[1] + dy[i];
 				
-				if (nx >= 0 && nx < h && ny >= 0 && ny < w && map[nx][ny].equals("L") && v[nx][ny] == 0) {
-					v[nx][ny] = 1;
-					q.offer(new int[] {nx, ny, d + 1});
+				if (nx >= 0 && nx < h && ny >= 0 && ny < w && arr[nx][ny].equals("L") && check[nx][ny] == 0) {
+					q.add(new int[] {nx, ny});
+					check[nx][ny] = check[poll[0]][poll[1]] + 1;
 				}
 			}
 		}
 		
-		if (d > result) {
-			result = d;
+		for (int i = 0; i < h; i++) {
+			for (int j = 0; j < w; j++) {
+				if (check[i][j] > result) {
+					result = check[i][j];
+				}
+			}
 		}
+		
 	}
+
 }
