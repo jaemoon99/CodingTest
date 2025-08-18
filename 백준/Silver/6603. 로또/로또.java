@@ -1,47 +1,53 @@
 import java.util.Scanner;
 
 public class Main {
-    static int k;
-    static int[] arr;
-    static boolean[] v;
-    public static void main(String[] args) {
+	
+	static int k;
+	static int[] arr, check;
 
-        Scanner sc = new Scanner(System.in);
-
-        while (true) {
-            k = sc.nextInt();
-
-            if (k == 0) {
-                return;
-            }
-
-            arr = new int[k];
-            v = new boolean[k];
-            for (int i = 0; i < k; i++) {
-                arr[i] = sc.nextInt();
-            }
-
-            combination(0, 0);
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		
+		while (true) {
+			k = sc.nextInt();
+			
+			if (k == 0) {
+				break;
+			}
+			
+			arr = new int[k];
+			check = new int[k];
+			
+			for (int i = 0; i < k; i++) {
+				arr[i] = sc.nextInt();
+			}
+			
+			com(0, 0);
             System.out.println();
-        }
-    }
-
-    static void combination(int cnt, int start) {
-        if (cnt == 6) {
-            for (int i = 0; i < k; i++) {
-                if (v[i]) {
-                    System.out.print(arr[i] + " ");
-                }
-            }
-            System.out.println();
-            return;
-        }
-
-        for (int i = start; i < k; i++) {
-            v[i] = true;
-            combination(cnt + 1, i + 1);
-            v[i] = false;
-        }
-
-    }
+			
+		}
+		
+		sc.close();
+	}
+	
+	public static void com(int idx, int cnt) {
+		
+		if (cnt == 6) {
+			for (int i = 0; i < k; i++) {
+				if (check[i] == 1) {
+					System.out.print(arr[i] + " ");
+				}
+			}
+			System.out.println();
+			return;
+		}
+		
+		for (int i = idx; i < k; i++) {
+			check[i] = 1;
+			com(i + 1, cnt + 1);
+			check[i] = 0;
+		}
+		
+	}
 }
