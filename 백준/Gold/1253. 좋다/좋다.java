@@ -24,10 +24,6 @@ public class Main {
 			int s = 0, e = n - 1;
 			
 			while (s < e) {
-
-				if (e - s == 1 && (i == s || i == e)) {
-					break;
-				}
 				
 				if (s == i) {
 					s++;
