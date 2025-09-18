@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class Main {
+	
+	static int parent[], rank[];
 	
 	public static void main(String[] args) {
 		
@@ -14,63 +15,89 @@ public class Main {
 		
 		int m = sc.nextInt();
 		
-		List<int[]>[] graph = new ArrayList[n + 1];
-		int[] v = new int[n + 1];
+		List<int[]> link = new ArrayList<>();
+		parent = new int[n + 1];
+		rank = new int[n + 1];
 		
-		for (int i = 1; i <= n; i++) {
-			graph[i] = new ArrayList<>();
-		}
-		
-		long totalWeight = 0;
+		long result = 0;
 		for (int i = 0; i < m; i++) {
 			int a = sc.nextInt();
 			int b = sc.nextInt();
 			int weight = sc.nextInt();
 			
-			totalWeight += weight;
+			result += weight;
 			
-			graph[a].add(new int[] {b, weight});
-			graph[b].add(new int[] {a, weight});
+			link.add(new int[] {a, b, weight});
 		}
 		
 		sc.close();
 		
-		PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
-		pq.add(new int[] {1, 0});
+		for (int i = 0; i < n; i++) {
+			parent[i] = i;
+		}
 		
-		long result = 0;
-		int cnt = 0;
+		link.sort(Comparator.comparingInt(arr -> arr[2]));
 		
-		while (!pq.isEmpty()) {
+		
+		int cnt = 1;
+		for (int[] nxt : link) {
+			int a = nxt[0];
+			int b = nxt[1];
+			int weight = nxt[2];
 			
-			if (cnt == n) {
-				break;
-			}
+			int pa = find(a);
+			int pb = find(b);
 			
-			int[] poll = pq.poll();
-			int node = poll[0];
-			int weight = poll[1];
-			
-			if (v[node] == 1) {
+			if (pa == pb) {
 				continue;
 			}
 			
-			result += weight;
-			v[node] = 1;
+			union(pa, pb);
+			
+			result -= weight;
+			
 			cnt++;
-			
-			for (int[] nxt : graph[node]) {
-				pq.add(nxt);
-			}
-			
 		}
+		
 		
 		if (cnt != n) {
 			System.out.println(-1);
 			return;
 		}
 		
-		System.out.println(totalWeight - result);
+		System.out.println(result);
+	}
+	
+	static int find(int x) {
+		while (parent[x] != x) {
+			x = parent[x];
+		}
+		
+		return x;
+	}
+	
+	static void union(int x, int y) {
+		
+		int a = find(x);
+		int b = find(y);
+		
+		if (a == b) {
+			return;
+		}
+		
+		if (rank[a] < rank[b]) {
+			parent[a] = b;
+			return;
+		}
+		
+		if (rank[b] < rank[a]) {
+			parent[b] = a;
+			return;
+		}
+		
+		parent[a] = b;
+		rank[b]++;
+		
 	}
 
 }
