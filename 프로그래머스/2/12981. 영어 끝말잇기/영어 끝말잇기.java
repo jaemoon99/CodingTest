@@ -1,20 +1,19 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 class Solution {
     public int[] solution(int n, String[] words) {
-        int[] answer = {};
 
-        List<String> du = new ArrayList<>();
+        Set<String> set = new HashSet<>();
 
-        du.add(words[0]);
+        set.add(words[0]);
 
         for (int i = 1; i < words.length; i++) {
-            if (!check(words[i - 1], words[i]) || du.contains(words[i])) {
+            if (!check(words[i - 1], words[i]) || set.contains(words[i])) {
                 return new int[] {i % n + 1, i / n + 1};
             }
 
-            du.add(words[i]);
+            set.add(words[i]);
         }
 
         return new int[] {0, 0};
