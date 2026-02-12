@@ -1,14 +1,8 @@
 class Solution {
     public int solution(int[] arr) {
-        int lcm = 0;
+        int lcm = arr[0] * arr[1] / gcd(arr[0], arr[1]);
+        
         for (int i = 1; i < arr.length; i++) {
-            
-            if (i == 1) {
-                int gcd = gcd(arr[i-1], arr[i]);
-                
-                lcm = arr[i-1] * arr[i] / gcd;
-                continue;
-            }
 
             int gcd = gcd(lcm, arr[i]);
             lcm = lcm * arr[i] / gcd;
