@@ -18,13 +18,13 @@ class Solution {
             int time = end - start;
             String title = split[2];
 
-            String score = split[3].replace("C#", "ㅊ").replace("D#", "ㅇ").replace("F#", "ㄹ")
+            String info = split[3].replace("C#", "ㅊ").replace("D#", "ㅇ").replace("F#", "ㄹ")
                                    .replace("G#", "ㅎ").replace("A#", "ㅁ").replace("E#", "ㄷ").replace("B#", "ㅠ");
 
-            StringBuilder played = new StringBuilder(time);
-            int len = score.length();
+            StringBuilder played = new StringBuilder();
+            int len = info.length();
             for (int i = 0; i < time; i++) {
-                played.append(score.charAt(i % len));
+                played.append(info.charAt(i % len));
             }
 
             if (played.indexOf(m) != -1) {
